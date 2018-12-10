@@ -1,18 +1,3 @@
-#------------------------------------------------------------------------------- 
-# 
-# File:         Makefile 
-# 
-# Author:       Stephen Brennan 
-# 
-# Date Created: Tuesday, 10 June 2015 
-# 
-# Description:  Makefile for CKY parser program. 
-# 
-# Copyright (c) 2015, Stephen Brennan.  Released under the Revised BSD License. 
-# See the LICENSE.txt file for details. 
-# 
-#------------------------------------------------------------------------------- 
-
 # Compiler Variable Declarations 
 CC=gcc 
 FLAGS=-Wall -pedantic 
