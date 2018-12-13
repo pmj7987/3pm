@@ -1,4 +1,4 @@
-# Compiler Variable Declarations 
+# 컴파일러 변수 선언
 CC=gcc 
 FLAGS=-Wall -pedantic 
 INC=-Isrc/ 
@@ -6,7 +6,7 @@ CFLAGS=$(FLAGS) -c -g --std=c99 $(INC) `sdl-config --cflags`
 LFLAGS=$(FLAGS) -lncurses `sdl-config --libs` -lSDL_mixer 
 DIR_GUARD=@mkdir -p $(@D) 
 
-# Build configurations. 
+# 빌드 구성
 CFG=release 
 ifeq ($(CFG),debug) 
 FLAGS += -g -DDEBUG -DSMB_DEBUG 
@@ -21,12 +21,12 @@ ifneq ($(CFG),release)
 endif 
 endif 
   
-# Sources and Objects 
+# 소스 및 객체
 SOURCES=$(shell find src/ -type f -name "*.c") 
 OBJECTS=$(patsubst src/%.c,obj/$(CFG)/%.o,$(SOURCES)) 
 DEPS=$(patsubst src/%.c,deps/%.d,$(SOURCES)) 
  
-# Main targets 
+# 주요 대상
 .PHONY: all clean clean_all 
   
 all: bin/$(CFG)/main 
@@ -40,12 +40,12 @@ clean:
 clean_all: 
        rm -rf bin/* obj/* deps/* 
   
-# --- Compile Rule 
+# 컴파일 규칙
 obj/$(CFG)/%.o: src/%.c 
       $(DIR_GUARD) 
     	$(CC) $(CFLAGS) $< -o $@ 
   
-# --- Link Rule 
+# 연결 규칙
 bin/$(CFG)/main: $(OBJECTS) 
        $(DIR_GUARD) 
        $(CC) $(OBJECTS) $(LFLAGS) -o bin/$(CFG)/main 
