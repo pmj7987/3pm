@@ -64,7 +64,6 @@ void display_score(WINDOW *w, tetris_game *tg) {
 /* 아래 소스는 보스모드입니다. */
 void boss_mode(void) {
   clear();
-  Mix_PauseMusic();
   printw("user@workstation-312:~/Documents/presentation $ ls -l\n"
          "total 528\n"
          "drwxr-xr-x 2 user users   4096 Jun  9 17:05 .\n"
@@ -87,7 +86,6 @@ void boss_mode(void) {
   timeout(0);
   noecho();
   clear();
-  Mix_ResumeMusic();
 }
 
 /* 게임을 저장하고 종료 */
@@ -133,7 +131,6 @@ int main(int argc, char **argv) {
   tetris_move move = TM_NONE;
   bool running = true;
   WINDOW *board, *next, *hold, *score;
-  Mix_Music *music;
 
   // 지정된 파일 이름을 불러옴
   if (argc >= 2) {
@@ -147,25 +144,6 @@ int main(int argc, char **argv) {
   } else {
     // 그렇지 않으면 새로운 게임을 시작
     tg = tg_create(22, 10);
-  }
-
-  // 음악 초기화
-  if (SDL_Init(SDL_INIT_AUDIO) < 0) {
-    fprintf(stderr, "unable to initialize SDL\n");
-    exit(EXIT_FAILURE);
-  }
-  if (Mix_Init(MIX_INIT_MP3) != MIX_INIT_MP3) {
-    fprintf(stderr, "unable to initialize SDL_mixer\n");
-    exit(EXIT_FAILURE);
-  }
-  if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 1024) != 0) {
-    fprintf(stderr, "unable to initialize audio\n");
-    exit(EXIT_FAILURE);
-  }
-  Mix_AllocateChannels(1); // only need background music
-  music = Mix_LoadMUS("tetris.mp3");
-  if (music) {
-    Mix_PlayMusic(music, -1);
   }
 
   // NCURSES 초기화
@@ -240,12 +218,6 @@ int main(int argc, char **argv) {
   // Ncurses 초기화 취소
   wclear(stdscr);
   endwin();
-
-  // 음악 초기화 취소
-  Mix_HaltMusic();
-  Mix_FreeMusic(music);
-  Mix_CloseAudio();
-  Mix_Quit();
 
   // 종료 메시지 출력
   printf("Game over!\n");
