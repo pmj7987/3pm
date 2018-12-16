@@ -147,13 +147,13 @@ int main(int argc, char **argv) {
   }
 
   // NCURSES 초기화
-  initscr();             // initialize curses
-  cbreak();              // pass key presses to program, but not signals
-  noecho();              // don't echo key presses to screen
-  keypad(stdscr, TRUE);  // allow arrow keys
-  timeout(0);            // no blocking on getch()
-  curs_set(0);           // set the cursor to invisible
-  init_colors();         // setup tetris colors
+  initscr();
+  cbreak();
+  noecho();    
+  keypad(stdscr, TRUE);
+  timeout(0);
+  curs_set(0);
+  init_colors();
 
   // 인터페이스 섹션별로 새 창을 만듬.
   board = newwin(tg->rows + 2, 2 * tg->cols + 2, 0, 0);
