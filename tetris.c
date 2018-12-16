@@ -146,7 +146,7 @@ static void tg_move(tetris_game *obj, int direction) {
   tg_put(obj, obj->falling);
 }
 
-/* 아래에 쓰러져 있는 사각형 블록을 송부합니다. */
+/* 떨어지는 테트리스블록을 아래로 보낸다 */
 static void tg_down(tetris_game *obj) {
   tg_remove(obj, obj->falling);
   while (tg_fits(obj, obj->falling)) {
@@ -301,23 +301,23 @@ static bool tg_game_over(tetris_game *obj) {
 /*게임을 한번 합니다.프로세스의 중력(gravity), 사용자 입력(input), 스코어입니다. 아직 게임이 실행되어 있는 경우는 true, 종료된 경우는 false 반환*/
 bool tg_tick(tetris_game *obj, tetris_move move) {
   int lines_cleared;
-  // Handle gravity.
+  // 중력
   tg_do_gravity_tick(obj);
 
-  // Handle input.
+  // 입력
   tg_handle_move(obj, move);
 
-  // Check for cleared lines
+  // 지워진 라인이 있는지 체크
   lines_cleared = tg_check_lines(obj);
 
   tg_adjust_score(obj, lines_cleared);
 
-  // Return whether the game will continue (NOT whether it's over)
+  // 게임이 계속 되는지 여부 확인(종료 여부와 관계 없음)
   return !tg_game_over(obj);
 }
 
 void tg_init(tetris_game *obj, int rows, int cols) {
-  // Initialization logic
+  // 초기화
   obj->rows = rows;
   obj->cols = cols;
   obj->board = malloc(rows * cols);
@@ -343,7 +343,7 @@ tetris_game *tg_create(int rows, int cols) {
 }
 
 void tg_destroy(tetris_game *obj) {
-  // Cleanup logic
+  // 정리
   free(obj->board);
 }
 
