@@ -352,6 +352,21 @@ void tg_delete(tetris_game *obj) {
   free(obj);
 }
 
+/* 파일로부터 게임을 불러옴 */ 
+tetris_game *tg_load(FILE *f) { 
+  tetris_game *obj = malloc(sizeof(tetris_game)); 
+  fread(obj, sizeof(tetris_game), 1, f); 
+  obj->board = malloc(obj->rows * obj->cols); 
+  fread(obj->board, sizeof(char), obj->rows * obj->cols, f); 
+  return obj; 
+} 
+ 
+/* 파일에 게임을 저장 */ 
+void tg_save(tetris_game *obj, FILE *f) { 
+  fwrite(obj, sizeof(tetris_game), 1, f); 
+  fwrite(obj->board, sizeof(char), obj->rows * obj->cols, f); 
+}
+
 /* 단지 초기 디버깅을 위해 게임보드를 파일에 출력. */
 void tg_print(tetris_game *obj, FILE *f) {
   int i, j;
